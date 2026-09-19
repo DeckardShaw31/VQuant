@@ -133,3 +133,34 @@ def get_regime(dt: str | date | datetime, exchange: str = "HOSE") -> MarketRegim
 
     # Fallback to earliest if before all
     return regimes[0]
+
+
+def get_tick_size(
+    price: float,
+    exchange: str = "HOSE",
+    dt: str | date | datetime = "2024-01-01",
+) -> float:
+    """Get tick size for given price, exchange, and date."""
+    return get_regime(dt, exchange).get_tick(price)
+
+
+def round_to_tick(
+    price: float,
+    exchange: str = "HOSE",
+    dt: str | date | datetime = "2024-01-01",
+    direction: str = "nearest",
+) -> float:
+    """Round price to valid exchange tick."""
+    return get_regime(dt, exchange).round_to_tick(price, mode=direction)
+
+
+def get_price_limits(
+    ref_price: float,
+    exchange: str = "HOSE",
+    dt: str | date | datetime = "2024-01-01",
+    is_first_day: bool = False,
+) -> tuple[float, float, float]:
+    """Return (floor_price, ceiling_price, ref_price)."""
+    reg = get_regime(dt, exchange)
+    ceil, floor = reg.price_limits(ref_price, is_first_day=is_first_day)
+    return floor, ceil, ref_price

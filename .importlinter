@@ -8,5 +8,6 @@ layers =
     vquant.strategies
     vquant.factors
     vquant.backtest
-    vquant.datasets
+    vquant.corpactions
+    vquant.data
     vquant.market

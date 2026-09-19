@@ -43,9 +43,7 @@ class ForeignFlowStrategy(BaseStrategy):
             if "foreign_buy_val" in df.columns and "foreign_sell_val" in df.columns:
                 df["foreign_net_val"] = df["foreign_buy_val"] - df["foreign_sell_val"]
             else:
-                raise ValueError(
-                    "DataFrame must contain foreign_net_val (or buy/sell val)."
-                )
+                raise ValueError("DataFrame must contain foreign_net_val (or buy/sell val).")
 
         close = df["close"]
         foreign_net = df["foreign_net_val"]

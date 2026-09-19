@@ -61,9 +61,7 @@ class VNTradingCalendar:
         end_idx = bisect.bisect_right(self._trading_days_sorted, e)
         return self._trading_days_sorted[start_idx:end_idx]
 
-    def settlement_date(
-        self, trade_date: str | date | datetime, cycle: str = "T+2 PM"
-    ) -> date:
+    def settlement_date(self, trade_date: str | date | datetime, cycle: str = "T+2 PM") -> date:
         """Calculate the exact date when bought shares become available for selling."""
         d = self._parse_date(trade_date)
         if cycle in ("T+2 PM", "T+1.5", "T+2"):
