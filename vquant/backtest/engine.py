@@ -1,7 +1,7 @@
 """Vietnam-specific Backtesting Engine supporting T+2.5 settlement and local tax laws."""
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 import numpy as np
 import pandas as pd
 
@@ -80,6 +80,25 @@ class VNBacktest:
         self.commission_rate = float(commission_rate)
         self.lot_size = int(lot_size)
 
+    def run_strategy(
+        self,
+        df: pd.DataFrame,
+        strategy: Any,
+        symbol: str = "VN_EQUITY",
+    ) -> BacktestResult:
+        """Run backtest directly from a VQuant Strategy object.
+
+        Args:
+            df: DataFrame containing OHLCV price bars.
+            strategy: A BaseStrategy instance implementing `generate_signals(df)`.
+            symbol: Stock symbol name.
+
+        Returns:
+            BacktestResult object.
+        """
+        signals = strategy.generate_signals(df)
+        return self.run(df, signals=signals, symbol=symbol)
+
     def run(
         self,
         df: pd.DataFrame,
@@ -121,7 +140,6 @@ class VNBacktest:
             sig = signals.iloc[i] if i < len(signals) else 0
 
             # 1. Unlock shares that have settled (T+2.5 logic)
-            # A buy executed on bar `buy_bar` becomes sellable on bar `buy_bar + settlement_days`
             remaining_batches = []
             for batch in pending_batches:
                 if i >= batch["settle_bar"]:
@@ -159,7 +177,6 @@ class VNBacktest:
 
             # 3. Process buy signal (1)
             elif sig == 1 and cash > (price * self.lot_size * (1 + self.commission_rate)):
-                # Calculate maximum affordable shares in multiples of lot_size
                 max_affordable = int(cash / (price * (1 + self.commission_rate)))
                 shares_to_buy = (max_affordable // self.lot_size) * self.lot_size
 

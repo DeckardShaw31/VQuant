@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vquant"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
   { name = "VQuant Core Team", email = "contact@vquant.org" },
 ]
@@ -50,8 +50,8 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/vquant-dev/vquant"
-"Bug Tracker" = "https://github.com/vquant-dev/vquant/issues"
+"Homepage" = "https://github.com/DeckardShaw31/VQuant"
+"Bug Tracker" = "https://github.com/DeckardShaw31/VQuant/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
