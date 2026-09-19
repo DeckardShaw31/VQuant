@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vquant"
+version = "0.0.1"
+authors = [
+  { name = "VQuant Core Team", email = "contact@vquant.org" },
+]
+description = "A modern Quantitative Trading & Backtesting framework tailored for the Vietnamese Stock Market"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = [
+  "vietnam",
+  "stock",
+  "quant",
+  "backtest",
+  "trading",
+  "algorithmic-trading",
+  "finance",
+  "vnindex",
+  "vn30"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Intended Audience :: Science/Research",
+  "Topic :: Office/Business :: Financial :: Investment",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "pandas>=1.3.0",
+  "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "twine",
+  "build",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/vquant-dev/vquant"
+"Bug Tracker" = "https://github.com/vquant-dev/vquant/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vquant*"]
