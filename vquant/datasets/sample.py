@@ -50,3 +50,34 @@ def load_sample_data(symbol: str = "VN30_SAMPLE", periods: int = 300, random_see
         }
     )
     return df
+
+
+def load_sample_flow_data(symbol: str = "VN30_FLOW_SAMPLE", periods: int = 300, random_seed: int = 42) -> pd.DataFrame:
+    """Generate sample OHLCV data enriched with Foreign Trading and Market Breadth.
+
+    Returns:
+        pd.DataFrame containing ['date', 'open', 'high', 'low', 'close', 'volume',
+                                 'foreign_buy_val', 'foreign_sell_val', 'foreign_net_val', 'breadth'].
+    """
+    df = load_sample_data(symbol=symbol, periods=periods, random_seed=random_seed)
+    np.random.seed(random_seed)
+
+    # Total trading value in billions VND
+    total_val = (df["close"] * df["volume"] * 1000) / 1_000_000_000
+
+    # Institutional foreign net buy/sell waves
+    cycle = np.sin(np.linspace(0, 4 * np.pi, periods))
+    foreign_net_val = (cycle * 25.0) + np.random.normal(0, 10.0, periods)  # Billion VND
+    foreign_buy_val = np.maximum(foreign_net_val + np.random.uniform(10, 30, periods), 5.0)
+    foreign_sell_val = foreign_buy_val - foreign_net_val
+
+    # Market breadth oscillating between 10% and 85%
+    breadth_base = 45.0 + (cycle * 25.0) + np.random.normal(0, 5.0, periods)
+    breadth = np.clip(breadth_base, 5.0, 95.0)
+
+    df["foreign_buy_val"] = np.round(foreign_buy_val, 2)
+    df["foreign_sell_val"] = np.round(foreign_sell_val, 2)
+    df["foreign_net_val"] = np.round(foreign_net_val, 2)
+    df["breadth"] = np.round(breadth, 2)
+
+    return df

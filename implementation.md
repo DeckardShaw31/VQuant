@@ -1,4 +1,4 @@
-﻿# VQUANT IMPLEMENTATION ARCHITECTURE & UPGRADE ROADMAP 🗺️
+# VQUANT IMPLEMENTATION ARCHITECTURE & UPGRADE ROADMAP 🗺️
 
 Tài liệu này đóng vai trò là kim chỉ nam kiến trúc (Architectural Blueprint) và lộ trình nâng cấp chi tiết cho thư viện **VQuant**. Mọi tính năng từ phiên bản v0.2.0 đến v1.0.0 đều phải tuân thủ nghiêm ngặt các tiêu chuẩn thiết kế, hợp đồng dữ liệu (Data Contracts), và quy trình kiểm thử tại đây trước khi viết mã nguồn.
 
