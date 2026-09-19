@@ -2,11 +2,13 @@
 
 from abc import ABC, abstractmethod
 from enum import IntEnum
+
 import pandas as pd
 
 
 class Signal(IntEnum):
     """Trading signal constants."""
+
     BUY = 1
     SELL = -1
     HOLD = 0

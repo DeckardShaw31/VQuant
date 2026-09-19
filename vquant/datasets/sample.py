@@ -4,7 +4,9 @@ import numpy as np
 import pandas as pd
 
 
-def load_sample_data(symbol: str = "VN30_SAMPLE", periods: int = 300, random_seed: int = 42) -> pd.DataFrame:
+def load_sample_data(
+    symbol: str = "VN30_SAMPLE", periods: int = 300, random_seed: int = 42
+) -> pd.DataFrame:
     """Generate realistic OHLCV sample data simulating a Vietnamese stock.
 
     Args:
@@ -36,7 +38,9 @@ def load_sample_data(symbol: str = "VN30_SAMPLE", periods: int = 300, random_see
 
     # Volume with occasional spikes
     base_volume = np.random.lognormal(mean=14.0, sigma=0.5, size=periods)
-    volume_spikes = (np.random.uniform(0, 1, size=periods) > 0.90) * np.random.uniform(1.5, 3.0, size=periods)
+    volume_spikes = (np.random.uniform(0, 1, size=periods) > 0.90) * np.random.uniform(
+        1.5, 3.0, size=periods
+    )
     volume = (base_volume * np.where(volume_spikes > 0, volume_spikes, 1.0)).astype(int)
 
     df = pd.DataFrame(
@@ -52,18 +56,21 @@ def load_sample_data(symbol: str = "VN30_SAMPLE", periods: int = 300, random_see
     return df
 
 
-def load_sample_flow_data(symbol: str = "VN30_FLOW_SAMPLE", periods: int = 300, random_seed: int = 42) -> pd.DataFrame:
+def load_sample_flow_data(
+    symbol: str = "VN30_FLOW_SAMPLE", periods: int = 300, random_seed: int = 42
+) -> pd.DataFrame:
     """Generate sample OHLCV data enriched with Foreign Trading and Market Breadth.
 
     Returns:
         pd.DataFrame containing ['date', 'open', 'high', 'low', 'close', 'volume',
-                                 'foreign_buy_val', 'foreign_sell_val', 'foreign_net_val', 'breadth'].
+                                 'foreign_buy_val', 'foreign_sell_val',
+                                 'foreign_net_val', 'breadth'].
     """
     df = load_sample_data(symbol=symbol, periods=periods, random_seed=random_seed)
     np.random.seed(random_seed)
 
     # Total trading value in billions VND
-    total_val = (df["close"] * df["volume"] * 1000) / 1_000_000_000
+    # (df["close"] * df["volume"] * 1000) / 1_000_000_000
 
     # Institutional foreign net buy/sell waves
     cycle = np.sin(np.linspace(0, 4 * np.pi, periods))

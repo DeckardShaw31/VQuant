@@ -204,6 +204,7 @@ from typing import Protocol, Sequence, Literal
 from datetime import date
 import pyarrow as pa
 
+
 class Capability(str, Enum):
     PRICES_DAILY = "prices_daily"
     PRICES_INTRADAY = "prices_intraday"
@@ -213,13 +214,15 @@ class Capability(str, Enum):
     FLOWS = "flows"
     TICKS = "ticks"
 
+
 class Provider(Protocol):
     name: str
     capabilities: frozenset[Capability]
     rate_limit: RateLimit
 
-    def prices(self, symbols: Sequence[str], start: date, end: date,
-               freq: Literal["1D", "1m", "5m"] = "1D") -> pa.Table: ...
+    def prices(
+        self, symbols: Sequence[str], start: date, end: date, freq: Literal["1D", "1m", "5m"] = "1D"
+    ) -> pa.Table: ...
     def corporate_actions(self, symbols: Sequence[str], start: date, end: date) -> pa.Table: ...
     def fundamentals(self, symbols: Sequence[str], statement: str, period: str) -> pa.Table: ...
     def universe(self, as_of: date) -> pa.Table: ...
@@ -287,7 +290,7 @@ This is the most valuable and highest-risk module. Notation: `P` = previous clos
 ```python
 def reconcile(event, prev_close, published_ref, exchange_rules):
     ref_pred = predict_ref(prev_close, event)
-    ref_pred = round_to_tick(ref_pred, exchange_rules.ref_rounding)   # [verify] rounding convention
+    ref_pred = round_to_tick(ref_pred, exchange_rules.ref_rounding)  # [verify] rounding convention
     delta_ticks = abs(ref_pred - published_ref) / tick(published_ref, exchange_rules)
     if delta_ticks <= 1:
         return Accept(event)
@@ -357,8 +360,14 @@ Every series follows the same `available_at` discipline as fundamentals.
 Each feature is declared with metadata, and the registry enforces the point-in-time contract.
 
 ```python
-@feature(name="momentum_126_5", inputs=["adj_close"], lookback=126, lag=1,
-         availability="close_t", tier="stable")
+@feature(
+    name="momentum_126_5",
+    inputs=["adj_close"],
+    lookback=126,
+    lag=1,
+    availability="close_t",
+    tier="stable",
+)
 def momentum(adj_close: pd.DataFrame, lookback: int = 126, skip: int = 5) -> pd.DataFrame: ...
 ```
 
@@ -517,9 +526,9 @@ tests/  docs/  benchmarks/  notebooks/
 ```python
 import vnq as vq
 
-px  = vq.data.prices("VN100", start="2015-01-01", adjust="total_return")
+px = vq.data.prices("VN100", start="2015-01-01", adjust="total_return")
 sig = vq.features.momentum(px, lookback=126, skip=5).rank(axis=1, pct=True)
-bt  = vq.backtest.run(sig > 0.8, px, capital=1e9, costs=vq.costs.retail())
+bt = vq.backtest.run(sig > 0.8, px, capital=1e9, costs=vq.costs.retail())
 bt.report()
 vq.validate.deflated_sharpe(bt, n_trials=87)
 ```

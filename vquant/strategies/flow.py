@@ -2,8 +2,9 @@
 
 import numpy as np
 import pandas as pd
+
+from vquant.factors.smart_money import calculate_cumulative_foreign_flow, calculate_foreign_streak
 from vquant.strategies.base import BaseStrategy, Signal
-from vquant.factors.smart_money import calculate_foreign_streak, calculate_cumulative_foreign_flow
 
 
 class ForeignFlowStrategy(BaseStrategy):
@@ -42,7 +43,9 @@ class ForeignFlowStrategy(BaseStrategy):
             if "foreign_buy_val" in df.columns and "foreign_sell_val" in df.columns:
                 df["foreign_net_val"] = df["foreign_buy_val"] - df["foreign_sell_val"]
             else:
-                raise ValueError("DataFrame must contain 'foreign_net_val' (or 'foreign_buy_val' and 'foreign_sell_val').")
+                raise ValueError(
+                    "DataFrame must contain foreign_net_val (or buy/sell val)."
+                )
 
         close = df["close"]
         foreign_net = df["foreign_net_val"]

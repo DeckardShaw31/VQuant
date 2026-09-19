@@ -1,7 +1,8 @@
 """Vietnam-specific Backtesting Engine supporting T+2.5 settlement and local tax laws."""
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Any
+from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -25,9 +26,9 @@ class BacktestResult:
     def __init__(
         self,
         equity_curve: pd.Series,
-        trades: List[Trade],
+        trades: list[Trade],
         initial_capital: float,
-        stats: Dict[str, float],
+        stats: dict[str, float],
     ):
         self.equity_curve = equity_curve
         self.trades = trades
@@ -128,8 +129,8 @@ class VNBacktest:
         cash = self.initial_capital
         available_shares = 0
         # Tracks pending shares: list of tuples (settle_bar_index, shares_bought, buy_price)
-        pending_batches: List[Dict[str, float]] = []
-        trades: List[Trade] = []
+        pending_batches: list[dict[str, float]] = []
+        trades: list[Trade] = []
         equity_series = np.zeros(n)
 
         total_tax_paid = 0.0
@@ -227,7 +228,9 @@ class VNBacktest:
 
         # Annualized return & Sharpe (assuming 252 trading days)
         days = max(len(df), 1)
-        annualized_return_pct = (((final_capital / self.initial_capital) ** (252.0 / days)) - 1) * 100.0
+        annualized_return_pct = (
+            ((final_capital / self.initial_capital) ** (252.0 / days)) - 1
+        ) * 100.0
 
         daily_returns = equity_series_pd.pct_change().dropna()
         if len(daily_returns) > 1 and daily_returns.std() > 0:

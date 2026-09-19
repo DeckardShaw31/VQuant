@@ -7,7 +7,7 @@ def calculate_ma_breadth(df_prices: pd.DataFrame, window: int = 20) -> pd.Series
     """Calculate the percentage of stocks trading above their moving average (Market Breadth).
 
     Args:
-        df_prices: DataFrame where columns are stock symbols and rows are trading dates with Close prices.
+        df_prices: DataFrame where columns are stock symbols and rows are trading dates.
         window: Moving average period (e.g. 20, 50, 200).
 
     Returns:

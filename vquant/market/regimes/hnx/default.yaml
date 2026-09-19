@@ -1,0 +1,25 @@
+regime: hnx-default
+exchange: HNX
+effective_from: "2015-01-01"
+effective_to: null
+sources:
+  - "HNX Trading Regulations"
+sessions:
+  continuous_morning: {start: "09:00", end: "11:30"}
+  continuous_afternoon: {start: "13:00", end: "14:30"}
+  atc: {start: "14:30", end: "14:45"}
+  plo: {start: "14:45", end: "15:00"}
+  put_through: {end: "15:00"}
+tick_table:
+  - {price_gte: 0.0, tick: 100.0}
+lot_size: 100
+odd_lot_board: true
+price_band_pct: 0.10
+first_day_band_pct: 0.30
+settlement:
+  buy_shares_sellable: "T+2 PM"
+  sale_cash_available: "T+2"
+features:
+  intraday_t0: false
+  short_selling: false
+  ccp: false

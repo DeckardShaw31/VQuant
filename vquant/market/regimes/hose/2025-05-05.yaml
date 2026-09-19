@@ -1,0 +1,27 @@
+regime: hose-krx-2025-05-05
+exchange: HOSE
+effective_from: "2025-05-05"
+effective_to: null
+sources:
+  - "HOSE Notice on KRX Trading System Cutover dated 2025-05-05"
+sessions:
+  ato: {start: "09:00", end: "09:15"}
+  continuous_morning: {start: "09:15", end: "11:30"}
+  continuous_afternoon: {start: "13:00", end: "14:30"}
+  atc: {start: "14:30", end: "14:45"}
+  put_through: {end: "15:00"}
+tick_table:
+  - {price_gte: 0.0, tick: 10.0}
+  - {price_gte: 10000.0, tick: 50.0}
+  - {price_gte: 50000.0, tick: 100.0}
+lot_size: 100
+odd_lot_board: true
+price_band_pct: 0.07
+first_day_band_pct: 0.20
+settlement:
+  buy_shares_sellable: "T+2 PM"
+  sale_cash_available: "T+2"
+features:
+  intraday_t0: false
+  short_selling: false
+  ccp: false

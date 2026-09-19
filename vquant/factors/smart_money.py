@@ -38,7 +38,9 @@ def calculate_foreign_streak(foreign_net_val: pd.Series) -> pd.Series:
     return pd.Series(streaks, index=foreign_net_val.index, name="foreign_streak")
 
 
-def calculate_foreign_turnover_ratio(foreign_net_val: pd.Series, total_value: pd.Series) -> pd.Series:
+def calculate_foreign_turnover_ratio(
+    foreign_net_val: pd.Series, total_value: pd.Series
+) -> pd.Series:
     """Calculate the ratio of net foreign buying to total turnover.
 
     Args:

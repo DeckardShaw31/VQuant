@@ -1,0 +1,12 @@
+[importlinter]
+root_package = vquant
+
+[importlinter:contract:1]
+name = Layered Architecture Contract
+type = layers
+layers =
+    vquant.strategies
+    vquant.factors
+    vquant.backtest
+    vquant.datasets
+    vquant.market

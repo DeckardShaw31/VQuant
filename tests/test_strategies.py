@@ -1,8 +1,14 @@
 """Unit tests for VQuant strategies and backtesting engine."""
 
-import pytest
 import pandas as pd
-from vquant import VNBacktest, MinerviniVCPStrategy, TurtleBreakoutVN, load_sample_data, calculate_ma_breadth
+
+from vquant import (
+    MinerviniVCPStrategy,
+    TurtleBreakoutVN,
+    VNBacktest,
+    calculate_ma_breadth,
+    load_sample_data,
+)
 
 
 def test_load_sample_data():

@@ -1,16 +1,16 @@
 """Unit tests for Smart Money Flow factors and flow strategies."""
 
-import pytest
 import pandas as pd
+
 from vquant import (
-    VNBacktest,
-    ForeignFlowStrategy,
-    BreadthThrustStrategy,
     AllTimeHighBreakoutStrategy,
-    load_sample_flow_data,
+    BreadthThrustStrategy,
+    ForeignFlowStrategy,
+    VNBacktest,
     calculate_cumulative_foreign_flow,
     calculate_foreign_streak,
     calculate_foreign_turnover_ratio,
+    load_sample_flow_data,
 )
 
 

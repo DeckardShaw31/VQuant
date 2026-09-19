@@ -1,7 +1,7 @@
 """Trend Following & Momentum Strategies tailored for the Vietnamese Stock Market."""
 
-import numpy as np
 import pandas as pd
+
 from vquant.strategies.base import BaseStrategy, Signal
 
 
@@ -66,7 +66,9 @@ class MinerviniVCPStrategy(BaseStrategy):
         vol_sma = vol.rolling(window=20, min_periods=1).mean()
 
         # Breakout price (highest high of past N days, excluding current bar)
-        recent_high = df["high"].shift(1).rolling(window=self.lookback_breakout, min_periods=5).max()
+        recent_high = (
+            df["high"].shift(1).rolling(window=self.lookback_breakout, min_periods=5).max()
+        )
 
         # Trend Template Condition
         trend_template = (
@@ -139,8 +141,12 @@ class TurtleBreakoutVN(BaseStrategy):
         close = df["close"]
 
         # Calculate Donchian Channels (shifted by 1 bar to avoid lookahead bias)
-        upper_channel = high.shift(1).rolling(window=self.entry_window, min_periods=self.entry_window).max()
-        lower_channel = low.shift(1).rolling(window=self.exit_window, min_periods=self.exit_window).min()
+        upper_channel = (
+            high.shift(1).rolling(window=self.entry_window, min_periods=self.entry_window).max()
+        )
+        lower_channel = (
+            low.shift(1).rolling(window=self.exit_window, min_periods=self.exit_window).min()
+        )
 
         # True Range and ATR
         prev_close = close.shift(1)
